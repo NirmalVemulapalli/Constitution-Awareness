@@ -1,87 +1,182 @@
-import { useEffect, useState } from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
-import { checkBackendHealth } from "../services/healthService";
+import { Link } from "react-router-dom";
 
 function Home() {
 
-    const [backendStatus, setBackendStatus] = useState("Checking...");
+  return (
 
-    useEffect(() => {
+    <div className="home-page">
 
-        const checkHealth = async () => {
+      <section className="hero">
 
-            try {
+        <div className="hero-content">
 
-                const data = await checkBackendHealth();
+          <span className="hero-badge">
+            🇮🇳 संविधान • Constitution of India
+          </span>
 
-                setBackendStatus(data.message);
+          <h1>
+            Understand Your Constitution.
+            <br />
+            <span>
+              Understand Your Rights.
+            </span>
+          </h1>
 
-            } catch (error) {
+          <p>
+            An interactive platform designed to help
+            citizens explore the Constitution of India,
+            understand fundamental rights, and learn
+            through simplified explanations.
+          </p>
 
-                console.error("Backend connection failed:", error);
+          <div className="hero-actions">
 
-                setBackendStatus("Backend connection failed");
-            }
-        };
+            <Link
+              to="/articles"
+              className="primary-button"
+            >
+              Explore Constitution →
+            </Link>
 
-        checkHealth();
+            <a
+              href="#features"
+              className="secondary-button"
+            >
+              Learn More
+            </a>
 
-    }, []);
+          </div>
 
-    return (
-        <Box
-            sx={{
-                minHeight: "100vh",
-                background: "#f7e6e6",
-                display: "flex",
-                alignItems: "center",
-            }}
+        </div>
+
+
+        <div className="hero-card">
+
+          <div className="constitution-symbol">
+            ⚖
+          </div>
+
+          <h2>
+            Constitution Awareness
+          </h2>
+
+          <p>
+            Knowledge is the foundation of responsible citizenship.
+          </p>
+
+          <div className="hero-card-footer">
+            <span>Articles</span>
+            <span>Rights</span>
+            <span>Democracy</span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section
+        id="features"
+        className="features-section"
+      >
+
+        <div className="section-heading">
+
+          <span>
+            LEARN • UNDERSTAND • PARTICIPATE
+          </span>
+
+          <h2>
+            Explore the Constitution
+            in a simpler way
+          </h2>
+
+        </div>
+
+
+        <div className="features-grid">
+
+          <div className="feature-card">
+
+            <div className="feature-icon">
+              📜
+            </div>
+
+            <h3>
+              Constitutional Articles
+            </h3>
+
+            <p>
+              Browse important constitutional articles
+              with structured and simplified information.
+            </p>
+
+          </div>
+
+
+          <div className="feature-card">
+
+            <div className="feature-icon">
+              🔎
+            </div>
+
+            <h3>
+              Smart Search
+            </h3>
+
+            <p>
+              Quickly discover constitutional concepts
+              using keywords and categories.
+            </p>
+
+          </div>
+
+
+          <div className="feature-card">
+
+            <div className="feature-icon">
+              🎓
+            </div>
+
+            <h3>
+              Simplified Learning
+            </h3>
+
+            <p>
+              Complex constitutional concepts explained
+              in a more accessible way.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <section className="cta-section">
+
+        <h2>
+          The Constitution belongs to every citizen.
+        </h2>
+
+        <p>
+          Start exploring and understanding the
+          principles that shape our democracy.
+        </p>
+
+        <Link
+          to="/articles"
+          className="primary-button"
         >
-            <Container maxWidth="md">
+          Start Exploring →
+        </Link>
 
-                <Typography
-                    variant="h2"
-                    component="h1"
-                    fontWeight="bold"
-                    gutterBottom
-                >
-                    Awareness of the Indian Constitution
-                </Typography>
+      </section>
 
-                <Typography
-                    variant="h6"
-                    color="text.secondary"
-                    sx={{ mb: 4 }}
-                >
-                    Explore, understand, and learn about the Constitution
-                    through interactive educational content.
-                </Typography>
+    </div>
 
-                <Button
-                    variant="contained"
-                    size="large"
-                    sx={{
-                        backgroundColor: "#8b0000",
-                        "&:hover": {
-                            backgroundColor: "#650000",
-                        },
-                    }}
-                >
-                    Explore Constitution
-                </Button>
-
-                <Typography
-                    sx={{
-                        mt: 4,
-                        fontWeight: "bold",
-                    }}
-                >
-                    Backend Status: {backendStatus}
-                </Typography>
-
-            </Container>
-        </Box>
-    );
+  );
 }
 
 export default Home;
