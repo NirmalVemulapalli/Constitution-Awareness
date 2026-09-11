@@ -1,31 +1,42 @@
 package com.constitution.awareness.config;
 
+
 import com.constitution.awareness.security.CustomUserDetailsService;
 import com.constitution.awareness.security.JwtAuthenticationFilter;
+
+
+import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+
 
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 import java.util.List;
 
@@ -49,6 +60,25 @@ public class SecurityConfig {
 
     private final PasswordEncoder
             passwordEncoder;
+
+
+    /*
+     * =====================================
+     * CORS CONFIGURATION
+     *
+     * Local:
+     * http://localhost:5173
+     *
+     * Production:
+     * Configured through
+     * APP_CORS_ALLOWED_ORIGINS
+     * =====================================
+     */
+
+    @Value(
+            "${app.cors.allowed-origins:http://localhost:5173}"
+    )
+    private String allowedOrigins;
 
 
     /*
@@ -104,7 +134,9 @@ public class SecurityConfig {
                  */
 
                 .csrf(
+
                         csrf -> csrf.disable()
+
                 )
 
 
@@ -115,9 +147,13 @@ public class SecurityConfig {
                  */
 
                 .cors(
+
                         cors -> cors.configurationSource(
+
                                 corsConfigurationSource()
+
                         )
+
                 )
 
 
@@ -136,6 +172,7 @@ public class SecurityConfig {
                                         SessionCreationPolicy.STATELESS
 
                                 )
+
                 )
 
 
@@ -578,9 +615,9 @@ public class SecurityConfig {
 
                                 ).hasAnyRole(
 
-                                        "ADMIN",
+                                        "EDUCATOR",
 
-                                        "EDUCATOR"
+                                        "ADMIN"
 
                                 )
 
@@ -617,6 +654,7 @@ public class SecurityConfig {
                                 .anyRequest()
 
                                 .authenticated()
+
                 )
 
 
@@ -648,6 +686,7 @@ public class SecurityConfig {
                                                         HttpStatus.UNAUTHORIZED.value()
 
                                                 )
+
                                 )
 
 
@@ -668,7 +707,9 @@ public class SecurityConfig {
                                                         HttpStatus.FORBIDDEN.value()
 
                                                 )
+
                                 )
+
                 )
 
 
@@ -701,6 +742,7 @@ public class SecurityConfig {
 
 
         return http.build();
+
     }
 
 
@@ -730,6 +772,7 @@ public class SecurityConfig {
 
 
         return provider;
+
     }
 
 
@@ -748,6 +791,7 @@ public class SecurityConfig {
 
         return configuration
                 .getAuthenticationManager();
+
     }
 
 
@@ -760,21 +804,39 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
-
         CorsConfiguration configuration =
 
                 new CorsConfiguration();
 
 
+        /*
+         * =====================================
+         * ALLOWED ORIGINS
+         *
+         * Local default:
+         * http://localhost:5173
+         *
+         * Production will be supplied through
+         * APP_CORS_ALLOWED_ORIGINS.
+         * =====================================
+         */
+
         configuration.setAllowedOriginPatterns(
 
                 List.of(
 
-                        "http://localhost:*"
+                        allowedOrigins.split(",")
 
                 )
+
         );
 
+
+        /*
+         * =====================================
+         * ALLOWED METHODS
+         * =====================================
+         */
 
         configuration.setAllowedMethods(
 
@@ -793,8 +855,15 @@ public class SecurityConfig {
                         "OPTIONS"
 
                 )
+
         );
 
+
+        /*
+         * =====================================
+         * ALLOWED HEADERS
+         * =====================================
+         */
 
         configuration.setAllowedHeaders(
 
@@ -803,6 +872,12 @@ public class SecurityConfig {
         );
 
 
+        /*
+         * =====================================
+         * ALLOW CREDENTIALS
+         * =====================================
+         */
+
         configuration.setAllowCredentials(
 
                 true
@@ -810,12 +885,24 @@ public class SecurityConfig {
         );
 
 
+        /*
+         * =====================================
+         * CORS CACHE
+         * =====================================
+         */
+
         configuration.setMaxAge(
 
                 3600L
 
         );
 
+
+        /*
+         * =====================================
+         * REGISTER CORS CONFIGURATION
+         * =====================================
+         */
 
         UrlBasedCorsConfigurationSource source =
 
@@ -832,5 +919,7 @@ public class SecurityConfig {
 
 
         return source;
+
     }
+
 }

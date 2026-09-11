@@ -1,8 +1,4 @@
-import axios from "axios";
-
-
-const API_URL =
-  "http://localhost:8080/api/profile";
+import api from "./api";
 
 
 /*
@@ -14,26 +10,9 @@ const API_URL =
 export const getProfile =
   async () => {
 
-    const token =
-      localStorage.getItem(
-        "token"
-      );
-
-
     const response =
-      await axios.get(
-
-        API_URL,
-
-        {
-          headers: {
-
-            Authorization:
-              `Bearer ${token}`,
-
-          },
-        }
-
+      await api.get(
+        "/profile"
       );
 
 
@@ -55,27 +34,12 @@ export const updateProfile =
 
   ) => {
 
-    const token =
-      localStorage.getItem(
-        "token"
-      );
-
-
     const response =
-      await axios.put(
+      await api.put(
 
-        API_URL,
+        "/profile",
 
-        profileData,
-
-        {
-          headers: {
-
-            Authorization:
-              `Bearer ${token}`,
-
-          },
-        }
+        profileData
 
       );
 
@@ -98,26 +62,11 @@ export const changePassword =
 
   ) => {
 
-    const token =
-      localStorage.getItem(
-        "token"
-      );
+    await api.put(
 
+      "/profile/change-password",
 
-    await axios.put(
-
-      `${API_URL}/change-password`,
-
-      passwordData,
-
-      {
-        headers: {
-
-          Authorization:
-            `Bearer ${token}`,
-
-        },
-      }
+      passwordData
 
     );
 

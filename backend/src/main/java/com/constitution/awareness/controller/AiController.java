@@ -1,12 +1,18 @@
 package com.constitution.awareness.controller;
 
+
 import com.constitution.awareness.dto.AiChatRequest;
 import com.constitution.awareness.dto.AiChatResponse;
 import com.constitution.awareness.service.AiService;
 
+
 import jakarta.validation.Valid;
 
+
+import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.http.ResponseEntity;
+
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/ai")
 @CrossOrigin(
-        origins = "http://localhost:5173"
+        origins = "${app.cors.allowed-origins:http://localhost:5173}"
 )
 public class AiController {
+
 
     private final AiService aiService;
 
