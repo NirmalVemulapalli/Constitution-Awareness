@@ -42,3 +42,7 @@ Thumbs.db
 *.log
 
 backend/src/main/resources/application-local.properties
+
+constitution_awareness_backup.sql
+
+backend/src/main/resources/application-aiven.properties
