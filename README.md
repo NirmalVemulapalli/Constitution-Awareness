@@ -18,6 +18,31 @@ Educators and Administrators can manage the educational content and platform fea
 
 ---
 
+## 🖥️ Home Page Preview
+
+<p align="center">
+  <a href="https://constitution-awareness.vercel.app/" target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/NirmalVemulapalli/Constitution-Awareness/main/docs/home-page.png"
+      alt="Awareness of the Indian Constitution - Home Page"
+      width="650"
+    />
+  </a>
+</p>
+
+<p align="center">
+  🌐 <strong>Live Application:</strong>
+  <a href="https://constitution-awareness.vercel.app/" target="_blank">
+    Open Constitution Awareness ↗
+  </a>
+</p>
+
+<p align="center">
+  <em>Click the preview or the link above to visit the live application.</em>
+</p>
+
+---
+
 ## ✨ Key Features
 
 ### 🔐 Authentication & Security
